@@ -7,3 +7,11 @@
 //
 
 import Foundation
+
+enum CocktailError: LocalizedError {
+    case invalidURL
+    case thrownError(Error)
+    case noData
+    case unableToDecode
+    
+}

@@ -7,3 +7,12 @@
 //
 
 import Foundation
+
+struct TopLevelObject: Decodable {
+    let drinks:[Cocktail]
+}
+
+struct Cocktail:Decodable {
+    let strDrink: String
+    let strDrinkThumb: URL?
+}

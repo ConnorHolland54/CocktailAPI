@@ -10,15 +10,31 @@ import UIKit
 
 class CocktailTableViewCell: UITableViewCell {
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+    //MARK: - Outlets
+    @IBOutlet weak var cocktailImageView: UIImageView!
+    @IBOutlet weak var cocktailNameLabel: UILabel!
+    
+     var cocktail: Cocktail? {
+        didSet {
+            updateViews()
+        }
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    
+    func updateViews() {
+        guard let cocktail = cocktail else {return}
+        cocktailNameLabel.text = cocktail.strDrink
+        cocktailImageView.image = nil
+        
+        CocktailController.fetchThumbnailForCocktail(cocktail: cocktail) { [weak self] (result) in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let image):
+                    self?.cocktailImageView.image = image
+                case .failure(let error):
+                    print(error)
+                    //present Error here
+                }
+            }
+        }
     }
-
 }
